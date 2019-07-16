@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use Entity\Users;
+use Doctrine\ORM\Query ;
 
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
@@ -64,38 +65,110 @@ class UserController
     $entityManager->persist($user);
     $entityManager->flush();
     $return = $response->withJson($user->getValues(), 201)
-      ->withHeader('Content-type', 'application/json');
+      ->withHeader('Content-type', 'application/json')
+      ->withHeader("Access-Control-Allow-Origin","*");
     return $return;
   }
+/**
+   * Deleta um Livro
+   * @param [type] $request
+   * @param [type] $response
+   * @param [type] $args
+   * @return Response
+   */
   public function removeUser($request, $response, $args)
   {
-    # code...
+    
+    $params = (object) $request->getParams();
+    $id = (int) $params->matricula ;
+        /**
+         * Encontra o Livro no Banco
+         */ 
+        $entityManager = $this->container->get('em');
+        $userRepo = $entityManager->getRepository('Entity\Users');
+        $user = $userRepo->find($id);   
+        /**
+         * Verifica se existe um livro com a ID informada
+         */
+        if (!$user) {
+            throw new \Exception("Book not Found", 404);
+        }  
+        /**
+         * Atualiza e Persiste o Livro com os parâmetros recebidos no request
+         */ 
+    /**
+     * Remove a entidade
+     */
+    $entityManager->remove($user);
+    $entityManager->flush(); 
+    $return = $response->withJson(['msg' => "Delete {$id}"], 200)
+        ->withHeader('Content-type', 'application/json');
+        return $return;    
   }
 
+
+  /**
+     * Exibe as informações de um livro 
+     * @param [type] $request
+     * @param [type] $response
+     * @param [type] $args
+     * @return Response
+     */
   public function searchAll($request, $response, $args)
   {
+    $entityManager = $this->container->get('em');
+    $userRepo = $entityManager->getRepository('Entity\Users');
+    $users = $userRepo->findAll(); 
+    $uses_array = array();
+    foreach ($users as $user) {
+        $uses_array[] = array(
+            'name' => $user->getNome(),
+            'id' => $user->getId(),
+            // other fields
+        );
+    }
 
-    $a->name = "Christian";
-    $a->id = 17204298;
-    $a->data = "Passou em POO";
-
-    $b->name = "Cristian";
-    $b->id = 14011234;
-    $b->data = "Nunca mais faz a REC";
-
-
-    // $dataArray = array(['id' => '12', 'name' => 'somethingElse', 'data' => '00']);
-    $dataArray = [];
-
-    array_push($dataArray, $a);
-    array_push($dataArray, $b);
-
-    // return $response->write(json_encode($dataArray))
-    return $response->withJson($dataArray)
+    return $response->withJson($uses_array)
       ->withHeader("Access-Control-Allow-Origin", "*");
   }
+
+  /**
+   * Atualiza um Livro
+   * @param [type] $request
+   * @param [type] $response
+   * @param [type] $args
+   * @return Response
+  */
   public function updateUser($request, $response, $args)
   {
-    # code...
+    $params = (object) $request->getParams();
+    $id = (int) $params->matricula ;
+        /**
+         * Encontra o Livro no Banco
+         */ 
+        $entityManager = $this->container->get('em');
+        $userRepo = $entityManager->getRepository('Entity\Users');
+        $user = $userRepo->find($id);   
+        /**
+         * Verifica se existe um livro com a ID informada
+         */
+        if (!$user) {
+            throw new \Exception("Book not Found", 404);
+        }  
+        /**
+         * Atualiza e Persiste o Livro com os parâmetros recebidos no request
+         */
+        $user->settagId($params->tagId);
+        /**
+         * Persiste a entidade no banco de dados
+         */
+        $entityManager->persist($user);
+        $entityManager->flush();        
+        
+        $return = $response->withJson($user->getValues(), 200)
+            ->withHeader('Content-type', 'application/json');
+        return $return;       
+
+
   }
 }
