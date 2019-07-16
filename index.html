@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="utf-8">
+        <title>LSCARA Client</title>
+
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+
+        <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script> -->
+
+        <script type="text/javascript" src="//code.jquery.com/jquery-1.12.3.js"></script>
+
+        <script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jq-3.3.1/dt-1.10.18/b-1.5.6/b-flash-1.5.6/r-2.2.2/rr-1.2.4/datatables.min.css"/>
+
+        <link rel="stylesheet" href="css.css">
+
+    </head>
+
+    <body >
+        <div class="container">
+            <h1>LOGS LSCARA</h1>
+
+        </div>
+        <div class="container">
+            <table class="table table-hover table-striped " id="tableUsers">
+              <thead id="thead" class="thead-dark">
+                <tr>
+                  <th scope="col">Nome</th>
+                  <th scope="col">Matrícula</th>
+                  <th scope="col">Acesso</th>
+
+                </tr>
+              </thead>
+
+              <tbody id="body">
+
+              </tbody>
+            </table>
+        </div>
+
+
+    </body>
+    <script>
+$(document).ready(function() {
+  var fs = function(){
+    // var dataObject = [
+    //   {id:1,name:'A', data:'03-3-3'},
+    //   {id:2,name:'B', data:'03-3-5'},
+    //   {id:3,name:'C', data:'03-3-4'}
+    // ];
+    var taMaluco ;
+    // $.ajax({
+	// 			method:'GET',
+	// 			url: 'http://localhost:9010',
+	// 			dataType: 'json'
+	// 		}).done(function(data){
+    //             a(data)
+	// 		});
+    //         a = function(e){
+    //             console.log(e);
+    //             console.log(typeof(e));
+    //
+    //             var dataSet = [];
+    //             dataSet.push([e.id,e.name,e.data]);
+    //             console.log(typeof(dataSet));
+    //
+    //             // $.each(e, function(index,data){
+    //
+    //             // });
+    //
+    //
+    //         $('#tableUsers').DataTable({
+    //             data: dataSet,
+    //             columns: [
+    //             { Tittle: 'id' },
+    //             { Tittle: 'name' },
+    //             { Tittle: 'data' }
+    //                      ]
+    //         });
+    //         }
+
+
+
+    $('#tableUsers').DataTable({
+        ajax:{
+            method: 'GET',
+            url:'http://localhost:9010',
+            dataSrc: '',
+        },
+      columns: [
+        { data: 'id' },
+        { data: 'name' },
+        { data: 'data' }
+    ],
+       columnDefs: [
+           {targets: 1,
+           className: 'dt-body-left'}
+       ],
+       language: {
+        "sEmptyTable": "Nenhum registro encontrado",
+        "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+        "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
+        "sInfoFiltered": "(Filtrados de _MAX_ registros)",
+        "sInfoPostFix": "",
+        "sInfoThousands": ".",
+        "sLengthMenu": " Mostrar _MENU_ resultados por página",
+        "sLoadingRecords": "Carregando...",
+        "sProcessing": "Processando...",
+        "sZeroRecords": "Nenhum registro encontrado",
+        "sSearch": "Pesquisar",
+        "oPaginate": {
+            "sNext": "Próximo",
+            "sPrevious": "Anterior",
+            "sFirst": "Primeiro",
+            "sLast": "Último"
+        },
+        "oAria": {
+            "sSortAscending": ": Ordenar colunas de forma ascendente",
+            "sSortDescending": ": Ordenar colunas de forma descendente"
+        }
+}
+
+    });
+  };
+  fs();
+
+$('.dataTables_length').addClass('tabelaSelect');
+$('.dataTables_filter').addClass('pesquisa');
+$('input, search').attr("placeholder", 'Buscar');
+$('div#tableUsers_length select').addClass('custom-select custom-select-sm ');
+$('div#tableUsers_filter').css('color','#343a40');
+$('div#tableUsers_length').css('color','#343a40');
+// $('div#tableUsers_wrapper').css('color','#343a4');
+
+});
+
+    </script>
+</html>
