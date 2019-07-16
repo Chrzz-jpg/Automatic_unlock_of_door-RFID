@@ -22,7 +22,7 @@
 
     <body >
         <div class="container">
-            <h1>USUÁRIOS LSCARA</h1>
+            <h1>GERENTE DE USUÁRIOS LSCARA</h1>
 
         </div>
         <div class="container">
@@ -33,9 +33,9 @@
             
             <br><br>
 
-            <form id="formAdd" method="POST">        
-                    <input type="text" placeholder="Tag" class="pesquisa"> <br><br>
-                    <input type="text" placeholder="Nome" name="Nome" class="pesquisa"><br><br>
+            <form id="formAdd">        
+                    <input type="text" placeholder="Tag" name="Tag"  class="pesquisa"> <br><br>
+                    <input type="text" placeholder="Nome" name="Nome"  class="pesquisa"><br><br>
                     <input type="text" placeholder="Matrícula" name="Matricula" class="pesquisa">
                     <br><br>
                     <input type="submit" name="subAdd" id="subAdd">
@@ -50,8 +50,8 @@
                     <label for="remUser"></label>
                     <input type="button" id="remUser"class="btnUser2" name="remUser"> Remover usuário 
                     <br><br>
-            <form id="formRem" method="POST">
-                    <input type="text" placeholder="Matrícula" name="matriculaRem" class="pesquisa"><br><br>
+            <form id="formRem">
+                    <input type="text" placeholder="Matrícula" name="Matricula" class="pesquisa"><br><br>
                     <input type="submit" name="subRem" id="subRem">
                 </form> </div>
 
@@ -61,8 +61,8 @@
                 <input type="button" name="upUser" id="upUser" class="btnUser3"> Atualizar usuário
             <br><br>
              
-               <form id="formUp" method="POST">
-                        <input type="text" placeholder="Matrícula" name="MatriculaUp" class="pesquisa"><br><br>
+               <form id="formUp">
+                        <input type="text" placeholder="Matrícula" name="Matricula" class="pesquisa"><br><br>
                         <input type="text" placeholder="Nova tag" name="Tag" class="pesquisa"><br><br>
                         <input type="submit" name="subRem" id="subUp">
                     </form>
@@ -102,16 +102,37 @@ $('#subUp').click(function(){
     $('#formUp').hide(); 
 });
 
+$('#formAdd').submit(function(e){
+    e.preventDefault();
+    let form =  $(this);
+    $.ajax({
+        method: 'POST',
+        url: '/api/users',
+        dataType: 'json',
+        data: form.serialize()
+    })}
+)
 
-
-$('.dataTables_length').addClass('tabelaSelect');
-$('.dataTables_filter').addClass('pesquisa');
-// $('input, search').attr("placeholder", 'Buscar');
-$('div#tableUsers_length select').addClass('custom-select custom-select-sm ');
-$('div#tableUsers_filter').css('color','#343a40');
-$('div#tableUsers_length').css('color','#343a40');
-// $('div#tableUsers_wrapper').css('color','#343a4');
-
+$('#formRem').submit(function(e){
+    e.preventDefault();
+    let form =  $(this);
+    $.ajax({
+        method: 'DELETE',
+        url: '/api/users',
+        dataType: 'json',
+        data: form.serialize()
+    })}
+)
+$('#formUp').submit(function(e){
+    e.preventDefault();
+    let form =  $(this);
+    $.ajax({
+        method: 'PUT',
+        url: '/api/users',
+        dataType: 'json',
+        data: form.serialize()
+    })}
+)
 });
 
     </script>
