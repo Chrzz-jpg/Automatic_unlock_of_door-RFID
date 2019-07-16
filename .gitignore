@@ -62,3 +62,5 @@ backend/composer.lock
 
 # End of https://www.gitignore.io/api/symfony
 
+**/db.sqlite
+**/create.php
