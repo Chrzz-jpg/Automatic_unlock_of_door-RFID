@@ -23,12 +23,15 @@
     padding: 10px;
 }
 .rem{
-    background-color: #495158;
-    color: white;
+    background-color: #dee2e6;
+    color: black;
     padding: 10px;
 }
 .up{
-    background-color: #343a40;
-    color: white;
+    background-color: #ffffff;
+    color: black;
     padding: 10px;
+}
+.cor{
+    background-color: green;
 }

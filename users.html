@@ -27,46 +27,52 @@
         </div>
         <div class="container">
 
-            <div class="add">
-            <label for="addUser"></label>
-            <input type="button" id="addUser" name="addUser" class="btnUser"> Adicionar usuário
-            
-            <br><br>
+            <div id=botoens>
 
-            <form id="formAdd">        
+                <div class="add">
+                  <label for="addUser"></label>
+                    <input type="button" id="addUser" name="addUser" class="btnAdd btn btn-light"> Adicionar usuário
+                     
+
+                   <label for="remUser"></label>
+                    <input type="button" id="remUser" name="remUser" class="btnRem btn btn-light"> Remover usuário 
+                       
+                   <label for="upUser"></label>
+                     <input type="button" name="upUser" id="upUser" class="btnUp btn btn-light"> Atualizar usuário
+                      </div>
+                    
+            <!-- <br><br> -->
+                      <div id="forms">
+                          
+                      </div>
+            <form id="formAdd">    
+                <br>    
                     <input type="text" placeholder="Tag" name="tagId"  class="pesquisa"> <br><br>
                     <input type="text" placeholder="Nome" name="nome"  class="pesquisa"><br><br>
                     <input type="text" placeholder="Matrícula" name="matricula" class="pesquisa">
                     <br><br>
                     <input type="submit" name="subAdd" id="subAdd">
                 </form> 
-            </div>
+            
 
             
             
            
 
-            <div class="rem">
-                    <label for="remUser"></label>
-                    <input type="button" id="remUser"class="btnUser2" name="remUser"> Remover usuário 
-                    <br><br>
+                   
+                    <!-- <br><br> -->
             <form id="formRem">
+                <br>
                     <input type="text" placeholder="Matrícula" name="matricula" class="pesquisa"><br><br>
                     <input type="submit" name="subRem" id="subRem">
-                </form> </div>
+                </form>
 
-
-                <div class="up">
-                        <label for="upUser"></label>
-                <input type="button" name="upUser" id="upUser" class="btnUser3"> Atualizar usuário
-            <br><br>
-             
                <form id="formUp">
+                    <br>
                         <input type="text" placeholder="Matrícula" name="matricula" class="pesquisa"><br><br>
                         <input type="text" placeholder="Nova tag" name="tagId" class="pesquisa"><br><br>
                         <input type="submit" name="subRem" id="subUp">
                     </form>
-                </div>
 
     </body>
     <script>
@@ -77,15 +83,42 @@ $(document).ready(function() {
 
 // Abre o form qnd clica no botao
 $('#addUser').click(function(){
-    $('#formAdd').toggle(); 
+    $('#formRem').hide();
+    $('#formUp').hide();
+    $('.btnAdd').removeClass('btn-light');
+    $('.btnAdd').addClass('btn-success');
+    $('.btnRem').removeClass('btn-success');
+    $('.btnRem').addClass('btn-light');
+    $('.btnUp').removeClass('btn-success');
+    $('.btnUp').addClass('btn-light');
+    $('#formAdd').toggle();
+    
 });
 
 $('#remUser').click(function(){
-    $('#formRem').toggle(); 
+    $('#formUp').hide();
+    $('#formAdd').hide();
+    $('.btnRem').removeClass('btn-light');
+    $('.btnRem').addClass('btn-success');
+    $('.btnAdd').removeClass('btn-success');
+    $('.btnAdd').addClass('btn-light');
+    $('.btnUp').removeClass('btn-success');
+    $('.btnUp').addClass('btn-light');
+    $('#formRem').toggle();
+ 
 });
 
 $('#upUser').click(function(){
-    $('#formUp').toggle(); 
+    $('#formAdd').hide();
+    $('#formRem').hide();
+    $('.btnUp').removeClass('btn-light');
+    $('.btnUp').addClass('btn-success');
+    $('.btnAdd').removeClass('btn-success');
+    $('.btnAdd').addClass('btn-light');
+    $('.btnRem').removeClass('btn-success');
+    $('.btnRem').addClass('btn-light');
+    $('#formUp').toggle();
+
 });
 
 
