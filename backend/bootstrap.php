@@ -29,7 +29,7 @@ $conn = Doctrine\DBAL\DriverManager::getConnection($conn , $dbalconfig);
 $ormconfig = new Doctrine\ORM\Configuration();
 $cache = new Doctrine\Common\Cache\ArrayCache();
 $ormconfig->setQueryCacheImpl($cache);
-$ormconfig->setProxyDir(__DIR__ . '/Models/EntityProxy');
+$ormconfig->setProxyDir(__DIR__ . '/models/EntityProxy');
 $ormconfig->setProxyNamespace('EntityProxy');
 $ormconfig->setAutoGenerateProxyClasses(true);
 
@@ -37,7 +37,7 @@ $ormconfig->setAutoGenerateProxyClasses(true);
 Doctrine\Common\Annotations\AnnotationRegistry::registerFile(__DIR__ . '/vendor/doctrine/orm/lib/Doctrine/ORM/Mapping/Driver/DoctrineAnnotations.php');
 $driver = new Doctrine\ORM\Mapping\Driver\AnnotationDriver(
     new Doctrine\Common\Annotations\AnnotationReader(),
-    array(__DIR__ . '/Models/Entity')
+    array(__DIR__ . '/models/Entity')
 );
 $ormconfig->setMetadataDriverImpl($driver);
 $ormconfig->setMetadataCacheImpl($cache);
@@ -47,7 +47,7 @@ $em = Doctrine\ORM\EntityManager::create($conn ,$ormconfig);
 
 // The Doctrine Classloader
 require __DIR__ . '/vendor/doctrine/common/lib/Doctrine/Common/ClassLoader.php';
-$classLoader = new Doctrine\Common\ClassLoader('Entity', __DIR__ . '/Models');
+$classLoader = new Doctrine\Common\ClassLoader('Entity', __DIR__ . '/models');
 $classLoader->register();
 
 

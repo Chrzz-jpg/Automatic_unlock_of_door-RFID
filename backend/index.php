@@ -4,9 +4,11 @@ require 'vendor/autoload.php';
 
 $app = new Slim\App();
 
-$app->get('/hello/{name}', function ($request, $response, $args) {
-    return $response->getBody()->write("Hello, " . $args['name']);
-});
+/**
+ * Rotas da API
+ */
+require 'routes.php';
+
 $app->get('/', function ($request, $response) {
 
     $a->name = "Christian";
