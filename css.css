@@ -1,0 +1,23 @@
+.tabelaSelect{
+    padding : 5.5px;
+    font-size: 20px;
+}
+.tableUsers_wrapper{
+    background-color: #ccc;
+}
+.pesquisa{
+    font-size: 20px;
+
+    padding : 6px;
+}
+#tableUsers_length select{
+    width: 60px;
+}
+.container h1{
+    padding: 10px;
+    text-align: center;
+}
+/* #tableUsers_wrapper{
+    background-color: #343a40;
+
+} */
