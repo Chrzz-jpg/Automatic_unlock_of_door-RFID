@@ -1,8 +1,5 @@
 <?php
-
-require 'vendor/autoload.php';
-
-$app = new Slim\App();
+require 'bootstrap.php';
 
 /**
  * Rotas da API

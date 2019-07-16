@@ -15,11 +15,11 @@ class Users
     /**
      * @var integer
      *
-     * @ORM\Column(name="matr", type="integer",unique=true)
+     * @ORM\Column(name="id", type="integer",unique=true)
      * @ORM\Id
      * 
      */
-    private $matr;
+    private $id;
 
   	  /**
 	   * @var string $nome 
@@ -28,9 +28,91 @@ class Users
     private $nome = null;
 
      /**
-	   *  @var string $tag
-       *  @ORM\Column(name="tag", type="string", length=255,nullable=true)
+	   *  @var string $tagId
+       *  @ORM\Column(name="tagId", type="string", length=255,nullable=true)
 	   */
-      private $tag = null;
+      private $tagId = null;
 
+
+    /**
+     * Set id.
+     *
+     * @param int $id
+     *
+     * @return Users
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * Get id.
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set nome.
+     *
+     * @param string|null $nome
+     *
+     * @return Users
+     */
+    public function setNome($nome = null)
+    {
+        $this->nome = $nome;
+
+        return $this;
+    }
+
+    /**
+     * Get nome.
+     *
+     * @return string|null
+     */
+    public function getNome()
+    {
+        return $this->nome;
+    }
+
+
+    /**
+     * Set tagId.
+     *
+     * @param string|null $tagId
+     *
+     * @return Users
+     */
+    public function setTagId($tagId = null)
+    {
+        $this->tagId = $tagId;
+
+        return $this;
+    }
+
+    /**
+     * Get tagId.
+     *
+     * @return string|null
+     */
+    public function getTagId()
+    {
+        return $this->tagId;
+    }
+
+
+
+        /**
+     * @return models\Entity\Users
+     */
+    public function getValues() {
+        return get_object_vars($this);
+    }
 }
