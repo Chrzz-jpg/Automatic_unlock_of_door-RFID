@@ -3,9 +3,6 @@
 namespace App\Controllers;
 
 use Entity\Users;
-use Doctrine\ORM\Query ;
-
-use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
 
@@ -102,7 +99,8 @@ class UserController
     $entityManager->remove($user);
     $entityManager->flush(); 
     $return = $response->withJson(['msg' => "Delete {$id}"], 200)
-        ->withHeader('Content-type', 'application/json');
+        ->withHeader('Content-type', 'application/json')
+        ->withHeader("Access-Control-Allow-Origin", "*");
         return $return;    
   }
 
@@ -166,7 +164,8 @@ class UserController
         $entityManager->flush();        
         
         $return = $response->withJson($user->getValues(), 200)
-            ->withHeader('Content-type', 'application/json');
+            ->withHeader('Content-type', 'application/json')
+            ->withHeader("Access-Control-Allow-Origin", "*");
         return $return;       
 
 
