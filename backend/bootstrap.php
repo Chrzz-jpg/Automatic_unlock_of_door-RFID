@@ -2,18 +2,60 @@
 
 require 'vendor/autoload.php';
 
+$container = new \Slim\Container();
+
 date_default_timezone_set('America/Sao_paulo');
 
-$isDevMode = true;
+// $conn = array(
+//     'driver' => 'pdo_mysql',
+//     'host'=>'dev.local',
+//     'user'=>'root',
+//     'password'=>'123',
+//     'dbname'=>'slim_artigo_blog'
+// );
+
+
+// Doctrine DBAL
 
 $conn = array(
-    'driver' => 'pdo_mysql',
-    'host'=>'dev.local',
-    'user'=>'root',
-    'password'=>'123',
-    'dbname'=>'slim_artigo_blog'
+    'driver' => 'pdo_sqlite',
+    'path' => __DIR__ . '/db.sqlite',
 );
 
-$doctrine = new WebDevBr\Doctrine\Doctrine($conn, $isDevMode);
-$doctrine->setEntitiesDir(__DIR__.'/src/App/Entities/');
-$entityManager = $doctrine->getEntityManager();
+$dbalconfig = new Doctrine\DBAL\Configuration();
+$conn = Doctrine\DBAL\DriverManager::getConnection($conn , $dbalconfig);
+
+// Doctrine ORM
+$ormconfig = new Doctrine\ORM\Configuration();
+$cache = new Doctrine\Common\Cache\ArrayCache();
+$ormconfig->setQueryCacheImpl($cache);
+$ormconfig->setProxyDir(__DIR__ . '/Models/EntityProxy');
+$ormconfig->setProxyNamespace('EntityProxy');
+$ormconfig->setAutoGenerateProxyClasses(true);
+
+// ORM mapping by Annotation
+Doctrine\Common\Annotations\AnnotationRegistry::registerFile(__DIR__ . '/vendor/doctrine/orm/lib/Doctrine/ORM/Mapping/Driver/DoctrineAnnotations.php');
+$driver = new Doctrine\ORM\Mapping\Driver\AnnotationDriver(
+    new Doctrine\Common\Annotations\AnnotationReader(),
+    array(__DIR__ . '/Models/Entity')
+);
+$ormconfig->setMetadataDriverImpl($driver);
+$ormconfig->setMetadataCacheImpl($cache);
+
+// EntityManager
+$em = Doctrine\ORM\EntityManager::create($conn ,$ormconfig);
+
+// The Doctrine Classloader
+require __DIR__ . '/vendor/doctrine/common/lib/Doctrine/Common/ClassLoader.php';
+$classLoader = new Doctrine\Common\ClassLoader('Entity', __DIR__ . '/Models');
+$classLoader->register();
+
+
+
+/**
+ * Coloca o Entity manager dentro do container com o nome de em (Entity Manager)
+ */
+$container['em'] = $em ;
+$app = new \Slim\App($container);
+
+
