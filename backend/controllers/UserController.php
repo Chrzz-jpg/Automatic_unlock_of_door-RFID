@@ -6,27 +6,27 @@ namespace App\Controllers;
  * Controller de Exemplo
  */
 class UserController {
-    /**
-     * Container - Ele recebe uma instancia de um 
-     * container da rota no construtor
-     * @var object s
+     /**
+     * Container Class
+     * @var [object]
      */
+    private $container;
 
    
+
+
    protected $tag;
    protected $matricula;
    protected $name;
 
-//    /**
-//     * Método Construtor 
-//     * @param ContainerInterface $container
-//     */
-//    public function __construct($tag, $name, $matricula) {
-//        $this->$tag = $tag;
-//        $this->$name = $name;
-//        $this->$matricula = $matricula;
-//        }
-   
+  /**
+     * Undocumented function
+     * @param [object] $container
+     */
+    public function __construct($container) {
+        $this->container = $container;
+    }
+    
 
      /**
      * Método de Exemplo
