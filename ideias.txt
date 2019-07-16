@@ -1,0 +1,89 @@
+
+-------------------------
+    CADASTRO 
+
+- Usuário informa:
+    * https://pessoa.sistemas.ufsc.br/
+- Admin insere
+
+-------------------------
+    ESP
+
+- Autentica na tabela Usuarios
+    *"Bem vindo 'fulano'"
+    *"Acesso negado"
+- Salva autorização na tabela logs 
+- 
+
+-------------------------
+    PHP - Páginas
+
+- Login (busca na tabela admin)
+- Index (Logs)
+- Cadastrar / Remover / Update usuários
+- Listar usuários -- Tornar admin
+- 
+
+--------------------------
+TABELAS DO BANCO 
+
+-Usuarios
+-Logs
+-Admins
+
+--------------------------
+FUNÇÕES DO USERCONTROLLER:
+
+- Adicionar usuários
+- Deletar usuários
+- Buscar usuários 
+- Update usuários
+- Salva na tabela logs
+
+
+--------------------------
+FUNÇÕES DO LOGCONTROLLER
+
+- Busar informações e registros dos usuários
+- 
+
+--------------------------
+FUNÇÕES DO ESPCONTROLLER
+
+- Autenticação dos usuários
+    *return:
+        >true
+          ou
+        >false
+- Registra na tabela dos logs
+- 
+
+--------------------------
+MODELS
+
+- Users
+    * Tag (entidade)
+    * Nome (entidade)
+    * Matricula (entidade)
+- Admin 
+    * Tag (entidade)
+    * Nome (entidade)
+    * Matricula (entidade)
+- Logs 
+    * Tag (entidade)
+    * Nome (entidade)
+    * Matricula (entidade)
+    * Data (enteidade)
+
+--------------------------
+ROTAS
+
+- Login
+- Index
+- Listar
+- Cadastrar
+- Remover
+- Update
+- 
+
+--------------------------

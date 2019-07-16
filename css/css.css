@@ -7,9 +7,9 @@
 }
 .pesquisa{
     font-size: 20px;
-
     padding : 6px;
 }
+
 #tableUsers_length select{
     width: 60px;
 }
@@ -17,7 +17,18 @@
     padding: 10px;
     text-align: center;
 }
-/* #tableUsers_wrapper{
+.add{
     background-color: #343a40;
-
-} */
+    color: white;
+    padding: 10px;
+}
+.rem{
+    background-color: #495158;
+    color: white;
+    padding: 10px;
+}
+.up{
+    background-color: #343a40;
+    color: white;
+    padding: 10px;
+}
