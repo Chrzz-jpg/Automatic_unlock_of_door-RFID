@@ -45,29 +45,36 @@ class EspController {
    */
     public function autenticUser($request, $response, $args)
     {
-        $acess = false;
-        $code  = 404;
-
+      
         $params = (object) $request->getParams();
         $TagId = (string) $params->tagId;
 
-          $user = $this->validarUser($TagId);
+        $user = $this->validarUser($TagId);
         if ($user) {
   
             $log = new Logs();
             $entityManager = $this->container->get('em');
             $log->setMatricula($user);
             $log->setIndate(new \DateTime(date("Y-m-d H:i:s")));
-        
+          
             $entityManager->persist($log);
             $entityManager->flush();
+             $nome = $user->getNome();
 
-            $acess = true;
-            $code = 200 ;
-
+            $resposta = array(
+                'acess'=> true, 
+                'nome' => $nome
+            );
+            $code=200;
+        } else {
+            $resposta = array(
+                'acess' => false, 
+               
+            );
+            $code=444;
         }
         
-        $return = $response->withJson(['acess' => $acess], $code)
+        $return = $response->withJson($resposta, $code)
         ->withHeader('Content-type', 'application/json')
         ->withHeader("Access-Control-Allow-Origin", "*");
         return $return; 
