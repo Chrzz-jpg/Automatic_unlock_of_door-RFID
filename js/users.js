@@ -101,9 +101,5 @@ $('input[type=text]').blur(function(){
     $(this).css('background', 'white');
 });
 
-$('input').keyup(function(e){
-    console.log(e.target.value);
-});
-
 
 });
