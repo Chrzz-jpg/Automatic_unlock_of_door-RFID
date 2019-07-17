@@ -16,5 +16,16 @@ $app->group('/api', function() {
         $this->delete('', '\App\controllers\UserController:removeUser');
         
     });
+
+    $this->group('/logs', function() {
+
+        $this->get('',"\App\controllers\LogController:searchAll");
+   
+    });
+    $this->group('/esp', function() {
+
+        $this->post('',"\App\controllers\EspController:autenticUser");
+   
+    });
   
 });

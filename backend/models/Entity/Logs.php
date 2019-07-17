@@ -2,7 +2,7 @@
 namespace Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Entity\Users;
 /**
  * Cliente
  *
@@ -19,23 +19,18 @@ class Logs {
      */
     private $id;
 
-    /**
-    * @var Users[]
-    * 
-    * @ORM\OneToMany( targetEntity="Users", mappedBy="matr")
-    */
-    private $users;
+ 
+     /**
+     * @ORM\ManyToOne(targetEntity="Entity\Users")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    private $matricula;
 
     /** @ORM\Column(type="datetime") */
     private $indate;
-    
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->users = new \Doctrine\Common\Collections\ArrayCollection();
-    }
+   
+
+ 
 
     /**
      * Get id.
@@ -72,38 +67,26 @@ class Logs {
     }
 
     /**
-     * Add user.
+     * Set matricula.
      *
-     * @param \Entity\Users $user
+     * @param \Entity\Users|null $matricula
      *
      * @return Logs
      */
-    public function addUser(\Entity\Users $user)
+    public function setMatricula(\Entity\Users $matricula = null)
     {
-        $this->users[] = $user;
+        $this->matricula = $matricula;
 
         return $this;
     }
 
     /**
-     * Remove user.
+     * Get matricula.
      *
-     * @param \Entity\Users $user
-     *
-     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     * @return \Entity\Users|null
      */
-    public function removeUser(\Entity\Users $user)
+    public function getMatricula()
     {
-        return $this->users->removeElement($user);
-    }
-
-    /**
-     * Get users.
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getUsers()
-    {
-        return $this->users;
+        return $this->matricula;
     }
 }

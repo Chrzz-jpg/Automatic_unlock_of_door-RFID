@@ -53,6 +53,7 @@ backend/composer.lock
 **/Entity/*~
 **/Entity/EntityProxy/*
 
+
 # Embedded web-server pid file
 /.web-server-pid
 
@@ -64,3 +65,5 @@ backend/composer.lock
 
 **/db.sqlite
 **/create.php
+backend/models/EntityProxy/__CG__EntityUsers.php
+backend/list.php
