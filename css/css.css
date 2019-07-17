@@ -14,9 +14,10 @@
     width: 60px;
 }
 .container h1{
-    padding: 10=px;
+    padding: 10px;
     text-align: center;
 }
+
 .add{
     background-color: #343a40;
     color: white;
@@ -35,4 +36,13 @@
 
 .cor{
     background-color: green;
+}
+.container h1{
+    margin-top: 10px;
+}
+
+.linkStyle{
+    color: black;
+    font-size: 20px;
+    padding: -5px;
 }

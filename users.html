@@ -14,6 +14,8 @@
 
         <script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
 
+        <script type="text/javascript" src="js/users.js"></script>
+      
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jq-3.3.1/dt-1.10.18/b-1.5.6/b-flash-1.5.6/r-2.2.2/rr-1.2.4/datatables.min.css"/>
 
         <link rel="stylesheet" href="css/css.css">
@@ -23,7 +25,12 @@
     <body >
         <div class="container">
             <h1>GERENTE DE USUÁRIOS LSCARA</h1>
-
+            <hr> <div class="d-flex bd-highlight mb-3">
+                    <a href="index.html" class="p-2 bd-highlight  linkStyle">LOGS LSCARA</a>
+                    <a href="lista.html" class="ml-auto p-2 bd-highlight  linkStyle">USUÁRIOS LSCARA</a>
+                    
+                </div>
+                <hr>
         </div>
         <div class="container">
 
@@ -41,17 +48,17 @@
                      <input type="button" name="upUser" id="upUser" class="btnUp btn btn-light"> Atualizar usuário
                       </div>
                     
-            <!-- <br><br> -->
                       <div id="forms">
                           
                       </div>
-            <form id="formAdd">    
+            <form id="formAdd" class='adici'>    
                 <br>    
-                    <input type="text" placeholder="Tag" name="tagId"  class="pesquisa"> <br><br>
+                    <input type="text" placeholder="Tag" name="tagId" class="pesquisa"> <br><br>
                     <input type="text" placeholder="Nome" name="nome"  class="pesquisa"><br><br>
-                    <input type="text" placeholder="Matrícula" name="matricula" class="pesquisa">
+                    <input type="number" placeholder="Matrícula" name="matricula" id="matr" class="pesquisa"><br><br>
+                    <input type="text" placeholder="Orientador" name="orientador" class="pesquisa">
                     <br><br>
-                    <input type="submit" name="subAdd" id="subAdd">
+                    <input type="submit" value="Adicionar usuário" name="subAdd" id="subAdd">
                 </form> 
             
 
@@ -63,110 +70,16 @@
                     <!-- <br><br> -->
             <form id="formRem">
                 <br>
-                    <input type="text" placeholder="Matrícula" name="matricula" class="pesquisa"><br><br>
-                    <input type="submit" name="subRem" id="subRem">
+                    <input type="number" placeholder="Matrícula" name="matricula" class="pesquisa"><br><br>
+                    <input type="submit" value="Remover usuário" name="subRem" id="subRem">
                 </form>
 
                <form id="formUp">
                     <br>
-                        <input type="text" placeholder="Matrícula" name="matricula" class="pesquisa"><br><br>
+                        <input type="number" placeholder="Matrícula" name="matricula" class="pesquisa"><br><br>
                         <input type="text" placeholder="Nova tag" name="tagId" class="pesquisa"><br><br>
-                        <input type="submit" name="subRem" id="subUp">
+                        <input type="submit" value="Atualizar tag" name="subRem" id="subUp">
                     </form>
 
     </body>
-    <script>
-$(document).ready(function() {
-    $('#formAdd').hide();
-    $('#formRem').hide();
-    $('#formUp').hide();
-
-// Abre o form qnd clica no botao
-$('#addUser').click(function(){
-    $('#formRem').hide();
-    $('#formUp').hide();
-    $('.btnAdd').removeClass('btn-light');
-    $('.btnAdd').addClass('btn-success');
-    $('.btnRem').removeClass('btn-success');
-    $('.btnRem').addClass('btn-light');
-    $('.btnUp').removeClass('btn-success');
-    $('.btnUp').addClass('btn-light');
-    $('#formAdd').toggle();
-    
-});
-
-$('#remUser').click(function(){
-    $('#formUp').hide();
-    $('#formAdd').hide();
-    $('.btnRem').removeClass('btn-light');
-    $('.btnRem').addClass('btn-success');
-    $('.btnAdd').removeClass('btn-success');
-    $('.btnAdd').addClass('btn-light');
-    $('.btnUp').removeClass('btn-success');
-    $('.btnUp').addClass('btn-light');
-    $('#formRem').toggle();
- 
-});
-
-$('#upUser').click(function(){
-    $('#formAdd').hide();
-    $('#formRem').hide();
-    $('.btnUp').removeClass('btn-light');
-    $('.btnUp').addClass('btn-success');
-    $('.btnAdd').removeClass('btn-success');
-    $('.btnAdd').addClass('btn-light');
-    $('.btnRem').removeClass('btn-success');
-    $('.btnRem').addClass('btn-light');
-    $('#formUp').toggle();
-
-});
-
-
-// fecha o form qnd envia ele
-$('#subAdd').click(function(){
-    $('#formAdd').hide(); 
-});
-
-$('#subRem').click(function(){
-    $('#formRem').hide(); 
-});
-
-$('#subUp').click(function(){
-    $('#formUp').hide(); 
-});
-
-$('#formAdd').submit(function(e){
-    e.preventDefault();
-    let form =  $(this);
-    $.ajax({
-        method: 'POST',
-        url: '/api/users',
-        dataType: 'json',
-        data: form.serialize()
-    })}
-)
-
-$('#formRem').submit(function(e){
-    e.preventDefault();
-    let form =  $(this);
-    $.ajax({
-        method: 'DELETE',
-        url: '/api/users',
-        dataType: 'json',
-        data: form.serialize()
-    })}
-)
-$('#formUp').submit(function(e){
-    e.preventDefault();
-    let form =  $(this);
-    $.ajax({
-        method: 'PUT',
-        url: '/api/users',
-        dataType: 'json',
-        data: form.serialize()
-    })}
-)
-});
-
-    </script>
 </html>

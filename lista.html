@@ -24,7 +24,12 @@
     <body >
         <div class="container">
             <h1>USUÁRIOS LSCARA</h1>
-
+            <hr> <div class="d-flex bd-highlight mb-3">
+            <a href="index.html" class="p-2 bd-highlight  linkStyle">LOGS LSCARA</a>
+            <a href="users.html" class="ml-auto p-2 bd-highlight  linkStyle">GERENTE DE USUÁRIOS</a>
+            
+        </div>
+        <hr>
         </div>
         <div class="container">
             <table class="table table-hover table-striped " id="tableUsers">
@@ -32,6 +37,7 @@
                 <tr>
                   <th scope="col">Nome</th>
                   <th scope="col">Matrícula</th>
+                  <th scope="col">Orientador</th>
 
                 </tr>
               </thead>
@@ -87,12 +93,13 @@ $(document).ready(function() {
     $('#tableUsers').DataTable({
         ajax:{
             method: 'GET',
-            url:'http://localhost:9001/backend/',
+            url:'http://localhost:9001/backend/api/users',
             dataSrc: '',
         },
       columns: [
         { data: 'name' },
-        { data: 'id' }
+        { data: 'id' },
+        { data: 'orientador'}
     ],
        columnDefs: [
            {targets: 1,
