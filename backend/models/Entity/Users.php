@@ -21,17 +21,24 @@ class Users
      */
     private $id;
 
-  	  /**
-	   * @var string $nome 
-       * @ORM\Column(name="name", type="string", length=255,nullable=true)
-	   */
+    /**
+     * @var string $nome 
+     * @ORM\Column(name="name", type="string", length=255,nullable=true)
+     */
     private $nome = null;
 
-     /**
-	   *  @var string $tagId
-       *  @ORM\Column(name="tagId", type="string", length=255,nullable=true)
-	   */
-      private $tagId = null;
+    /**
+     * @var string $orientador 
+     * @ORM\Column(name="orientador", type="string", length=255,nullable=true)
+     */
+    private $orientador = null;
+
+
+    /**
+     *  @var string $tagId
+     *  @ORM\Column(name="tagId", unique=true, type="string", length=255,nullable=true)
+     */
+    private $tagId = null;
 
 
     /**
@@ -109,10 +116,36 @@ class Users
 
 
 
-        /**
+    /**
      * @return models\Entity\Users
      */
-    public function getValues() {
+    public function getValues()
+    {
         return get_object_vars($this);
+    }
+
+    /**
+     * Set orientador.
+     *
+     * @param string|null $orientador
+     *
+     * @return Users
+     */
+    
+    public function setOrientador($orientador = null)
+    {
+        $this->orientador = $orientador;
+
+        return $this;
+    }
+
+    /**
+     * Get orientador.
+     *
+     * @return string|null
+     */
+    public function getOrientador()
+    {
+        return $this->orientador;
     }
 }

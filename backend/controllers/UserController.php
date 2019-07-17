@@ -53,6 +53,7 @@ class UserController
      * Instância da nossa Entidade preenchida com nossos parametros do post
      */
     $user = (new Users())->setNome($params->nome)
+      ->setOrientador($params->orientador)
       ->setId($params->matricula)
       ->setTagId($params->tagId);
 
@@ -88,7 +89,7 @@ class UserController
          * Verifica se existe um livro com a ID informada
          */
         if (!$user) {
-            throw new \Exception("Book not Found", 404);
+            throw new \Exception("Users not Found", 404);
         }  
         /**
          * Atualiza e Persiste o Livro com os parâmetros recebidos no request
@@ -122,6 +123,7 @@ class UserController
         $uses_array[] = array(
             'name' => $user->getNome(),
             'id' => $user->getId(),
+            'orientador' => $user->getOrientador(),
             // other fields
         );
     }
@@ -151,7 +153,7 @@ class UserController
          * Verifica se existe um livro com a ID informada
          */
         if (!$user) {
-            throw new \Exception("Book not Found", 404);
+            throw new \Exception("user not Found", 404);
         }  
         /**
          * Atualiza e Persiste o Livro com os parâmetros recebidos no request
