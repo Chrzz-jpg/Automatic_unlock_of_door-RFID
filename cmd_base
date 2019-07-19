@@ -1,3 +1,5 @@
  php cli.php orm:schema-tool:create --dump-sql
  php cli.php orm:schema-tool:update --force
- php cli.php orm:generate-entities models
+ php cli.php orm:generate-entities backend/models
+
+ php -S localhost:8888 -t public public/index.php

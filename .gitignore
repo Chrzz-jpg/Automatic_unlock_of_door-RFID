@@ -67,3 +67,4 @@ backend/composer.lock
 **/create.php
 backend/models/EntityProxy/__CG__EntityUsers.php
 backend/list.php
+vendor/

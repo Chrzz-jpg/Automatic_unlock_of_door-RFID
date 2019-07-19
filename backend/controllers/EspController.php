@@ -1,8 +1,6 @@
 <?php
 
 namespace App\Controllers;
-use \Psr\Http\Message\ServerRequestInterface as Request;
-use \Psr\Http\Message\ResponseInterface as Response;
 use Doctrine\DBAL\Types\DateTimeType;
 use Entity\Logs;
 
@@ -50,27 +48,24 @@ class EspController {
         $TagId = (string) $params->tagId;
 
         $user = $this->validarUser($TagId);
+        $resposta = [];
         if ($user) {
   
             $log = new Logs();
             $entityManager = $this->container->get('em');
-            $log->setMatricula($user);
-            $log->setIndate(new \DateTime(date("Y-m-d H:i:s")));
+            $log->setMatricula($user)
+                ->setIndate(new \DateTime(date("Y-m-d H:i:s")));
           
             $entityManager->persist($log);
             $entityManager->flush();
-             $nome = $user->getNome();
+           
 
-            $resposta = array(
-                'acess'=> true, 
-                'nome' => $nome
-            );
+            $resposta['acess']=true;
+            $resposta['nome']=$user->getNome();
+            
             $code=200;
         } else {
-            $resposta = array(
-                'acess' => false, 
-               
-            );
+            $resposta['acess']=false;
             $code=444;
         }
         

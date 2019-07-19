@@ -52,7 +52,7 @@ $('#formAdd').submit(function(e){
     let form =  $(this);
     $.ajax({
         method: 'POST',
-        url: 'http://localhost:9001/backend/api/users',
+        url: '/api/users',
         dataType: 'json',
         data: form.serialize()
     }).success(function(result){
@@ -67,7 +67,7 @@ $('#formRem').submit(function(e){
     let form =  $(this);
     $.ajax({
         method: 'DELETE',
-        url: 'http://localhost:9001/backend/api/users',
+        url: '/api/users',
         dataType: 'json',
         data: form.serialize()
     }).success(function(result){
@@ -82,7 +82,7 @@ $('#formUp').submit(function(e){
     let form =  $(this);
     $.ajax({
         method: 'PUT',
-        url: 'http://localhost:9001/backend/api/users',
+        url: '/api/users',
         dataType: 'json',
         data: form.serialize()
     }).success(function(result){

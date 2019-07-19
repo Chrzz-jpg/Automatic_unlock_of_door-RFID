@@ -3,7 +3,7 @@ $(document).ready(function() {
       $('#tableUsers').DataTable({
           ajax:{
               method: 'GET',
-              url:'http://localhost:9001/backend/api/logs',
+              url:'/api/logs',
               dataSrc: '',
           },
         columns: [

@@ -2,6 +2,7 @@
 
 namespace Entity;
 
+use App\Auth\Bcrypt;
 
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Users;
@@ -23,27 +24,33 @@ class Admin
     private $id;
 
   	  /**
-	   * @var string $pass 
-       * @ORM\Column(name="pass", type="string", length=255,nullable=true)
+	   * @var string $password 
+       * @ORM\Column(name="password", type="string", length=100,nullable=true)
 	   */
-    private $pass = null;
+    private $password ;
 
+   
     /**
-     * @var Users[]
-    * 
-    * @ORM\OneToMany( targetEntity="Users", mappedBy="matr")
-    */
-    private $users;
+     *  @var Users[]
+     * @ORM\ManyToOne(targetEntity="Entity\Users")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    private $user;
 
-  
-
-    /**
+     /**
      * Constructor
      */
-    public function __construct()
+    public function __construct(Array $data = [])
     {
-        $this->users = new \Doctrine\Common\Collections\ArrayCollection();
+        if (!empty($data['user']))
+        $this->setUser($data['user']);
+
+        if (!empty($data['password'])) {
+            $bcrypt = new Bcrypt();
+            $this->password = $bcrypt->setHash($data['password']);
+        }
     }
+     
 
     /**
      * Get id.
@@ -56,62 +63,61 @@ class Admin
     }
 
     /**
-     * Set pass.
+     * Set password.
      *
-     * @param string|null $pass
+     * @param string|null $password
      *
      * @return Admin
      */
-    public function setPass($pass = null)
+    public function setPassword($password = null)
     {
-        $this->pass = $pass;
+        $this->password = $password;
 
         return $this;
     }
 
     /**
-     * Get pass.
+     * Get password.
      *
      * @return string|null
      */
-    public function getPass()
+    public function getPassword()
     {
-        return $this->pass;
+        return $this->password;
     }
 
     /**
-     * Add user.
+     * Set user.
      *
-     * @param \Entity\Users $user
+     * @param \Entity\Users|null $user
      *
      * @return Admin
      */
-    public function addUser(\Entity\Users $user)
+    public function setUser(\Entity\Users $user = null)
     {
-        $this->users[] = $user;
+        $this->user = $user;
 
         return $this;
     }
 
     /**
-     * Remove user.
+     * Get user.
      *
-     * @param \Entity\Users $user
-     *
-     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     * @return \Entity\Users|null
      */
-    public function removeUser(\Entity\Users $user)
+    public function getUser()
     {
-        return $this->users->removeElement($user);
+        return $this->user;
     }
 
-    /**
-     * Get users.
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getUsers()
+
+    public function __toArray()
     {
-        return $this->users;
+        $data = [];
+        foreach ($this as $k=>$v)
+        $data[$k] = $v;
+
+        return $data;
     }
+
 }
