@@ -1,8 +1,8 @@
 <?php
 
 require 'vendor/autoload.php';
+use \Slim\Container;
 
-$container = new \Slim\Container();
 
 date_default_timezone_set('America/Sao_paulo');
 
@@ -54,10 +54,18 @@ $classLoader->register();
 //  Add View
 $container['view'] = new \Slim\Views\PhpRenderer(  __DIR__ . '/templates');
 
+
+// Auth middleware
+$container['Auth'] = function ($c) {
+    return new App\Auth\Auths($c->get('router'));
+};
+
 /**
  * Coloca o Entity manager dentro do container com o nome de em (Entity Manager)
  */
 $container['em'] = $em ;
+
+
 $app = new \Slim\App($container);
 
 

@@ -1,6 +1,6 @@
 <?php
 require  __DIR__ . '/../bootstrap.php';
-
+session_start();
 /**
  * Rotas
  */

@@ -4,8 +4,7 @@
         "doctrine/orm": "^2.6",
         "tuupola/slim-basic-auth": "^3.2",
         "firebase/php-jwt": "^5.0",
-        "slim/php-view": "^2.2",
-        "slim/middleware": "^1.0"
+        "slim/php-view": "^2.2"
     },
 
     "autoload": {

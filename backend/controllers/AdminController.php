@@ -56,7 +56,7 @@ class AdminController
     
     $data["password"] = $params->password;
     if (isset($params->nome))
-         $data["user"] = $this->validarUserbyName("capeta");
+         $data["user"] = $this->validarUserbyName((string)$params->nome);
     if ($data["user"]) {
         $entityManager = $this->container->get('em');
         $admin = new Admin($data);
