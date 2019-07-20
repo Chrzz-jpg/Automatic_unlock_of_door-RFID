@@ -1,48 +1,35 @@
 <?php
  use \Slim\Interfaces\CallableResolverInterface;
 
-
- use \Psr\Http\Message\ServerRequestInterface as Request;
+use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
-
-
 
 $app->get('/', function (Request $request, Response $response) {
        $response = $this->view->render($response, 'index.html');
     return $response;
 })->setName('home');
 
-// $app->get('/login', "\App\controllers\AuthController:check");
-
 $app->get('/login', function ($request, $response, $args) {
-    // Check if the user's credentials are valid, then log them in however you keep track of users.
-    // Obviously this method isn't secure, and is just used to illustrate the flow.
-    if ($request->getParsedBodyParam('name') === 'user') {
-        $_SESSION['isLoggedIn'] = 'no';
-        session_regenerate_id();
-        // Login success, redirect to the dashboard.
+    if ($_SESSION['isLoggedIn'] === 'yes') {
         return $response->withRedirect("/logs");
     }
-    // Login failed, redirect home.
-    $uri = $this->router->pathFor('home');
-    // return $response->withRedirect($uri);
-    // $return = $response->withJson(["url"=>$_SESSION['isLoggedIn']], 201)
-    //   ->withHeader('Content-type', 'application/json')
-    //   ->withHeader("Access-Control-Allow-Origin","*");
-    // return $return;
     $response = $this->view->render($response, 'login.html');
     return $response;
 });
 
 $app->post('/login',"\App\controllers\AuthController:check");
 
-
+$app->get('/logout', function ($request, $response, $args) {
+    unset($_SESSION['isLoggedIn']);
+    session_regenerate_id();
+    return $response->withRedirect($this->router->pathFor('home'));
+});
 
 $app->get('/lista', function (Request $request, Response $response) {
    
     $response = $this->view->render($response, 'lista.html');
     return $response;
-})->add('Auth');;
+})->add('Auth');
 
 $app->get('/users', function (Request $request, Response $response) {
    
@@ -53,9 +40,9 @@ $app->get('/logs',function (Request $request, Response $response) {
    
     $response = $this->view->render($response, 'logs.html');
     return $response;
-})->setName('home');
+})->add('Auth');
 
-$app->get('/capeta',"\App\controllers\AdminController:addAdmin");
+$app->get('/admin',"\App\controllers\AdminController:addAdmin");
 
 /**
  * Grupo dos enpoints iniciados por v1
