@@ -3,3 +3,5 @@
  php cli.php orm:generate-entities backend/models
 
  php -S localhost:8888 -t public public/index.php
+curl -d "password=olhaai&&nome=cristian" -X GET  http://localhost:9001/admin
+curl -d "tagId=654987" http://localhost:9001/api/esp

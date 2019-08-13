@@ -63,12 +63,12 @@ class AuthController
            }
         }
     
-        $return = $response->withJson(['nome' => $nome,"password"=>$pass], 200)
-        ->withHeader('Content-type', 'application/json')
-        ->withHeader("Access-Control-Allow-Origin", "*");
-        return $return;
+        // $return = $response->withJson(['nome' => $nome,"password"=>$pass], 200)
+        // ->withHeader('Content-type', 'application/json')
+        // ->withHeader("Access-Control-Allow-Origin", "*");
+        // return $return;
 
-
+        return $response->withRedirect("/");
 
 
 
