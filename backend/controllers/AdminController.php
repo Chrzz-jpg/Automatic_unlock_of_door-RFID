@@ -2,17 +2,15 @@
 
 namespace App\Controllers;
 
-use Entity\Users;
+use Entity\Admin;
 use \Psr\Http\Message\ResponseInterface as Response;
-use \Psr\Http\Message\ServerRequestInterface as Request;
+use App\Auth\Login;
 
-
-use Doctrine\ORM\Query\AST\NewObjectExpression;
-
+// use App\Controllers\AuthController;
 /**
  * Controller de Exemplo
  */
-class UserController
+class AdminController
 {
   /**
    * Container Class
@@ -38,7 +36,7 @@ class UserController
    * @param [type] $args
    * @return void Response
    */
-  public function addUser($request, $response, $args)
+  public function addAdmin($request, $response, $args)
   {
 
     $params = (object) $request->getParams();
@@ -48,21 +46,30 @@ class UserController
      */
     // var_dump($this->container->get("em"));
     $entityManager = $this->container->get("em");
+    #$params->nome
+    #$params->password
 
     /**
      * Instância da nossa Entidade preenchida com nossos parametros do post
      */
-    $user = (new Users())->setNome($params->nome)
-      ->setOrientador($params->orientador)
-      ->setId($params->matricula)
-      ->setTagId($params->tagId);
+    $data= [];
 
-    /**
-     * Persiste a entidade no banco de dados
-     */
-    $entityManager->persist($user);
-    $entityManager->flush();
-    $return = $response->withJson($user->getValues(), 201)
+    $data["password"] = $params->password;
+    if (isset($params->matricula))
+         $data["user"] = $this->validarUserbyMatricula((string)$params->matricula);
+    if ($data["user"]) {
+        $entityManager = $this->container->get('em');
+        $admin = new Admin($data);
+        $entityManager->persist($admin);
+        $entityManager->flush();
+        $respota = $data["user"]->getValues();
+    }else
+    {
+        $respota = ["user"=>"Don't exist"];
+    }
+
+
+    $return = $response->withJson($respota, 201)
       ->withHeader('Content-type', 'application/json')
       ->withHeader("Access-Control-Allow-Origin","*");
     return $return;
@@ -76,38 +83,38 @@ class UserController
    */
   public function removeUser($request, $response, $args)
   {
-    
+
     $params = (object) $request->getParams();
     $id = (int) $params->matricula ;
         /**
          * Encontra o Livro no Banco
-         */ 
+         */
         $entityManager = $this->container->get('em');
         $userRepo = $entityManager->getRepository('Entity\Users');
-        $user = $userRepo->find($id);   
+        $user = $userRepo->find($id);
         /**
          * Verifica se existe um livro com a ID informada
          */
         if (!$user) {
             throw new \Exception("Users not Found", 404);
-        }  
+        }
         /**
          * Atualiza e Persiste o Livro com os parâmetros recebidos no request
-         */ 
+         */
     /**
      * Remove a entidade
      */
     $entityManager->remove($user);
-    $entityManager->flush(); 
+    $entityManager->flush();
     $return = $response->withJson(['msg' => "Delete {$id}"], 200)
         ->withHeader('Content-type', 'application/json')
         ->withHeader("Access-Control-Allow-Origin", "*");
-        return $return;    
+        return $return;
   }
 
 
   /**
-     * Exibe as informações de um livro 
+     * Exibe as informações de um livro
      * @param [type] $request
      * @param [type] $response
      * @param [type] $args
@@ -117,7 +124,7 @@ class UserController
   {
     $entityManager = $this->container->get('em');
     $userRepo = $entityManager->getRepository('Entity\Users');
-    $users = $userRepo->findAll(); 
+    $users = $userRepo->findAll();
     $uses_array = array();
     foreach ($users as $user) {
         $uses_array[] = array(
@@ -145,16 +152,16 @@ class UserController
     $id = (int) $params->matricula ;
         /**
          * Encontra o Livro no Banco
-         */ 
+         */
         $entityManager = $this->container->get('em');
         $userRepo = $entityManager->getRepository('Entity\Users');
-        $user = $userRepo->find($id);   
+        $user = $userRepo->find($id);
         /**
          * Verifica se existe um livro com a ID informada
          */
         if (!$user) {
             throw new \Exception("user not Found", 404);
-        }  
+        }
         /**
          * Atualiza e Persiste o Livro com os parâmetros recebidos no request
          */
@@ -163,13 +170,34 @@ class UserController
          * Persiste a entidade no banco de dados
          */
         $entityManager->persist($user);
-        $entityManager->flush();        
-        
+        $entityManager->flush();
+
         $return = $response->withJson($user->getValues(), 200)
             ->withHeader('Content-type', 'application/json')
             ->withHeader("Access-Control-Allow-Origin", "*");
-        return $return;       
+        return $return;
 
 
+  }
+
+  public function validarUserbyName($name)
+  {
+      $entityManager = $this->container->get('em');
+      $userRepo = $entityManager->getRepository('Entity\Users');
+      $user = $userRepo->findOneBy([
+          "nome" => $name,
+          ]);
+
+      return $user ;
+  }
+  public function validarUserbyMatricula($matricula)
+  {
+      $entityManager = $this->container->get('em');
+      $userRepo = $entityManager->getRepository('Entity\Users');
+      $user = $userRepo->findOneBy([
+          "id" => $matricula,
+          ]);
+
+      return $user ;
   }
 }
